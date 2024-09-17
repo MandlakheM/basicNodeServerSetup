@@ -1,7 +1,6 @@
 const http = require("node:http");
 
 const server = http.createServer((req, res) => {
-  
   const successHeaders = { "Content-Type": "text/plain" };
 
   if (req.method === "GET") {
@@ -35,6 +34,11 @@ const server = http.createServer((req, res) => {
       res.writeHead(404, successHeaders);
       return res.end("Error 404: Page not found");
     }
+  }
+
+  if (req.method !== "POST" && req.method !== "GET") {
+    res.writeHead(502, successHeaders);
+    return res.end(`Error 502: ${req.method} method not allowed`);
   }
 });
 
